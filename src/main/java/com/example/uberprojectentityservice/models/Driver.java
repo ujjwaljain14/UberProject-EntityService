@@ -1,8 +1,8 @@
 package com.example.uberprojectentityservice.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -35,6 +35,21 @@ public class Driver extends BaseModel{
 
     @Column(nullable=false)
     private String aadharCard;
+
+    @Enumerated(EnumType.STRING)
+    private DriverApprovalStatus driverApprovalStatus;
+
+    @OneToOne
+    private ExactLocation lastKnownLocation;
+
+    @OneToOne
+    private ExactLocation home;
+
+    private String activeCity;
+
+    @DecimalMin(value="0.00",message = "Rating must be between 0 and 5")
+    @DecimalMax(value="5.00",message = "Rating must be between 0 and 5")
+    private double rating; //daily at night we can update this property this will reduce our queries
 
     @OneToMany(mappedBy = "driver")
     @Fetch(FetchMode.SUBSELECT)
