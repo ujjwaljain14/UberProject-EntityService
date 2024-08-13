@@ -47,9 +47,11 @@ public class Driver extends BaseModel{
 
     private String activeCity;
 
+    private Boolean isAvailable;
+
     @DecimalMin(value="0.00",message = "Rating must be between 0 and 5")
     @DecimalMax(value="5.00",message = "Rating must be between 0 and 5")
-    private double rating; //daily at night we can update this property this will reduce our queries
+    private Double rating; //daily at night we can update this property this will reduce our queries
 
     @OneToMany(mappedBy = "driver")
     @Fetch(FetchMode.SUBSELECT)

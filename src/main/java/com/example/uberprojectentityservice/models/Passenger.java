@@ -1,8 +1,8 @@
 package com.example.uberprojectentityservice.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -31,5 +31,17 @@ public class Passenger extends BaseModel{
     @OneToMany(mappedBy = "passenger")
     private List<Booking> bookings = new ArrayList<>();
 
+    @OneToOne
+    private Booking activeBooking;
+
+    @DecimalMin(value="0.00",message = "Rating must be between 0 and 5")
+    @DecimalMax(value="5.00",message = "Rating must be between 0 and 5")
+    private Double rating; //daily at night we can update this property this will reduce our queries
+
+    @OneToOne
+    private ExactLocation exactLocation;
+
+    @OneToOne
+    private ExactLocation homeLocation;
 
 }
